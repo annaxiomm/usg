@@ -11,9 +11,16 @@ config_version=5
 [application]
 
 config/name="unnamed sandbox game"
-run/main_scene="uid://c1o388ufh1i2g"
+run/main_scene="uid://dc5fkoewahg4e"
 config/features=PackedStringArray("4.4", "Forward Plus")
+boot_splash/show_image=false
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/mode=4
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [dotnet]
 

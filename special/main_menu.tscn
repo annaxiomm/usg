@@ -1,0 +1,120 @@
+[gd_scene load_steps=10 format=3 uid="uid://btg35b77nt4kf"]
+
+[ext_resource type="FontFile" uid="uid://ch6j30bye5bbf" path="res://assets/fonts/InterBold.ttf" id="1_2ghb3"]
+[ext_resource type="Script" uid="uid://cqna83ca5mcnv" path="res://global/menu/menubuttons.gd" id="1_60nxy"]
+[ext_resource type="Texture2D" uid="uid://bq3nm2bvuhufd" path="res://addons/kenney_prototype_textures/purple/texture_02.png" id="2_at6ll"]
+[ext_resource type="Script" uid="uid://c40c6vncibetp" path="res://global/menu/rotatecubethingy.gd" id="3_38v6h"]
+[ext_resource type="PackedScene" uid="uid://c1o388ufh1i2g" path="res://main.tscn" id="3_onx68"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_at6ll"]
+font = ExtResource("1_2ghb3")
+font_size = 40
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_38v6h"]
+albedo_texture = ExtResource("2_at6ll")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_2ghb3"]
+material = SubResource("StandardMaterial3D_38v6h")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="Environment" id="Environment_38v6h"]
+background_mode = 1
+background_color = Color(0.0980392, 0.0745098, 0.203922, 1)
+ambient_light_color = Color(1, 1, 1, 1)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 1.02857)
+color = Color(0.0980392, 0.0745098, 0.203922, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="GameName" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "unnamed sandbox game"
+label_settings = SubResource("LabelSettings_at6ll")
+
+[node name="MenuOptions" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+alignment = 1
+script = ExtResource("1_60nxy")
+game_scene = ExtResource("3_onx68")
+
+[node name="Start" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/MenuOptions"]
+layout_mode = 2
+text = "start"
+flat = true
+alignment = 0
+
+[node name="Options" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/MenuOptions"]
+layout_mode = 2
+disabled = true
+text = "options"
+flat = true
+alignment = 0
+
+[node name="Quit" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/MenuOptions"]
+layout_mode = 2
+text = "quit"
+flat = true
+alignment = 0
+
+[node name="Version" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "pre-alpha v0.1 (how did you get access to this?)"
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="MarginContainer/HBoxContainer/SubViewportContainer"]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="Node3D" type="Node3D" parent="MarginContainer/HBoxContainer/SubViewportContainer/SubViewport"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MarginContainer/HBoxContainer/SubViewportContainer/SubViewport/Node3D"]
+mesh = SubResource("BoxMesh_2ghb3")
+script = ExtResource("3_38v6h")
+
+[node name="Camera3D" type="Camera3D" parent="MarginContainer/HBoxContainer/SubViewportContainer/SubViewport/Node3D"]
+transform = Transform3D(0.707107, -0.40558, 0.579228, 0, 0.819152, 0.573576, -0.707107, -0.40558, 0.579228, 2, 2, 2)
+environment = SubResource("Environment_38v6h")
+doppler_tracking = 1
+projection = 1
+
+[node name="OmniLight3D" type="OmniLight3D" parent="MarginContainer/HBoxContainer/SubViewportContainer/SubViewport/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 2)
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/MenuOptions/Start" to="MarginContainer/HBoxContainer/VBoxContainer/MenuOptions" method="_on_start_pressed"]
