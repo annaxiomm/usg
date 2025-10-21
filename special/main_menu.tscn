@@ -73,6 +73,7 @@ script = ExtResource("1_60nxy")
 game_scene = ExtResource("3_onx68")
 
 [node name="Start" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/MenuOptions"]
+custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 text = "start"
 flat = true

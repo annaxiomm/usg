@@ -39,7 +39,6 @@ func _physics_process(delta: float) -> void:
 		current_speed = walk_speed
 
 	if Input.is_action_just_pressed("fly"):
-		print("fly pressed")
 		if fly:
 			fly = false
 			current_speed = fly_speed_horizontal
