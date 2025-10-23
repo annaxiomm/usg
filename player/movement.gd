@@ -42,9 +42,11 @@ func _physics_process(delta: float) -> void:
 		if fly:
 			fly = false
 			current_speed = fly_speed_horizontal
+			$CollisionShape3D.disabled = false
 		else:
 			fly = true
 			current_speed = walk_speed
+			$CollisionShape3D.disabled = true
 			
 	if fly:
 		var fly_input := Input.get_axis("crouch", "jump")
