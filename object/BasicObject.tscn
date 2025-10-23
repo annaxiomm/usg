@@ -1,4 +1,7 @@
-[gd_scene format=3 uid="uid://va0qg7ayppyg"]
+[gd_scene load_steps=2 format=3 uid="uid://va0qg7ayppyg"]
+
+[ext_resource type="Script" uid="uid://bdtexd2oaswxq" path="res://object/basic_object.gd" id="1_3xorf"]
 
 [node name="BasicObject" type="RigidBody3D"]
+script = ExtResource("1_3xorf")
 metadata/Pickable = true

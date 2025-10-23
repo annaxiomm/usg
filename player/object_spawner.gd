@@ -8,6 +8,12 @@ extends Node
 var cached_objects := {}
 
 var basic_object := preload("res://object/BasicObject.tscn")
+var loaded_object: GLTFDocument = null
+var loaded_state: GLTFState = null
+@export var object_to_load: String = "cube.glb"
+var loaded_object_name: String
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -25,38 +31,49 @@ func _ready() -> void:
 	print(available_objects)
 	
 func _process(_delta: float):
-	if Input.is_action_just_pressed("spawn_object"):
-		spawn_new_object("cube.glb")
+	if object_to_load != loaded_object_name:
+		load_new_object(object_to_load)
+		loaded_object_name = object_to_load
+		
 	
-func spawn_new_object(name: String):
-	if place_raycast.is_colliding():
+	if Input.is_action_just_pressed("spawn_object"):
+		spawn_new_object(loaded_object)
+		
+func load_new_object(name: String):
+	var gltf_doc_load = GLTFDocument.new()
+	var gltf_state_load = GLTFState.new()
+	var filename = "user://objects/" + name
+		
+	var error = gltf_doc_load.append_from_file(filename, gltf_state_load)
+	if error == OK:
+		loaded_object = gltf_doc_load
+		loaded_state = gltf_state_load
+	else:
+		print("failed to load object! loading default object instead...")
+		error = gltf_doc_load.append_from_file("res://assets/models/404.glb", gltf_state_load)
+		loaded_object = gltf_doc_load
+		loaded_state = gltf_state_load
+	
+	
+	
+func spawn_new_object(object: GLTFDocument):
+	
+	if place_raycast.is_colliding() and object != null:
+		var object_scene = object.generate_scene(loaded_state)
 		var tmp_object = basic_object.instantiate()
 		var tmp_position = place_raycast.get_collision_point()
 		tmp_position.y += 5
 		
 		tmp_object.position = tmp_position
-		
-		var gltf_doc_load = GLTFDocument.new()
-		var gltf_state_load = GLTFState.new()
-		var filename = "user://objects/" + name
-		print(filename)
-		var error = gltf_doc_load.append_from_file(filename, gltf_state_load)
-		
-		if error == OK:
-			var object_root_node = gltf_doc_load.generate_scene(gltf_state_load)
-			for child: MeshInstance3D in object_root_node.find_children("", "MeshInstance3D", true, false):
-				var collision_body = CollisionShape3D.new()
-				collision_body.shape = child.mesh.create_convex_shape()
-				collision_body.transform = child.transform
-				tmp_object.add_child(collision_body)
+		for child: MeshInstance3D in object_scene.find_children("", "MeshInstance3D", true, false):
+			var collision_body = CollisionShape3D.new()
+			collision_body.shape = child.mesh.create_convex_shape()
+			collision_body.transform = child.transform
+			tmp_object.add_child(collision_body)
 				
-			print(object_root_node.get_children())
-				
-			tmp_object.add_child(object_root_node)
-			
-			
-		else:
-			print("failed to load object!")
+			tmp_object.add_child(object_scene)
 		
 		get_parent().get_parent().add_child(tmp_object)
+	else:
+		print("No object loaded!")
 		
