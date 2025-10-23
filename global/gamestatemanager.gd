@@ -6,10 +6,16 @@ var paused = false
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
 		if paused:
-			paused = false
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-			get_tree().paused = false
+			pause()
 		else:
-			paused = true
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			get_tree().paused = true
+			unpause()
+			
+func pause():
+	paused = false
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	get_tree().paused = false
+	
+func unpause():
+	paused = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	get_tree().paused = true

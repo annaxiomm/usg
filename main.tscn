@@ -42,7 +42,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.939082, 0)
 [node name="env" type="Node3D" parent="."]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="env"]
-transform = Transform3D(1, 0, 0, 0, 0.746162, 0.665765, 0, -0.665765, 0.746162, 0, 11.3754, 5.75904)
+transform = Transform3D(1, 0, 0, 0, 0.74616176, 0.66576475, 0, -0.66576475, 0.74616176, 0.22197247, 11.3754, 5.8388424)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="env"]
 environment = SubResource("Environment_7mycd")
