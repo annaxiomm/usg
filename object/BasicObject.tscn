@@ -3,5 +3,11 @@
 [ext_resource type="Script" uid="uid://bdtexd2oaswxq" path="res://object/basic_object.gd" id="1_3xorf"]
 
 [node name="BasicObject" type="RigidBody3D"]
+contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("1_3xorf")
 metadata/Pickable = true
+metadata/name = ""
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

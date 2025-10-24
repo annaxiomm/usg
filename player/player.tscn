@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://5ku2q4tf23ih"]
+[gd_scene load_steps=5 format=3 uid="uid://5ku2q4tf23ih"]
 
 [ext_resource type="Script" uid="uid://drj6k78rfua3w" path="res://player/movement.gd" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://dxundqkpdatyc" path="res://player/object_spawner.gd" id="2_rkbax"]
+[ext_resource type="Script" uid="uid://cvnfrei1wov6c" path="res://player/object_spawn_menu.gd" id="3_g1dw6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kqu6x"]
 
@@ -21,4 +22,50 @@ transform = Transform3D(10, 0, 0, 0, -4.371139e-07, -10, 0, 10, -4.371139e-07, 0
 
 [node name="ObjectSpawner" type="Node3D" parent="."]
 script = ExtResource("2_rkbax")
-object_to_load = "shrek.glb"
+object_to_load = "i dont exist"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 200
+theme_override_constants/margin_bottom = 100
+
+[node name="ObjectSpawn" type="PanelContainer" parent="CanvasLayer/MarginContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+script = ExtResource("3_g1dw6")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/ObjectSpawn"]
+layout_mode = 2
+
+[node name="WindowTitle" type="Label" parent="CanvasLayer/MarginContainer/ObjectSpawn/VBoxContainer"]
+layout_mode = 2
+text = "Spawn Objects"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/MarginContainer/ObjectSpawn/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HFlowContainer" type="HFlowContainer" parent="CanvasLayer/MarginContainer/ObjectSpawn/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="StatusBar" type="HBoxContainer" parent="CanvasLayer/MarginContainer/ObjectSpawn/VBoxContainer"]
+layout_mode = 2
+
+[node name="ObjectName" type="Label" parent="CanvasLayer/MarginContainer/ObjectSpawn/VBoxContainer/StatusBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "No object selected"
+
+[node name="SpawnObject" type="Button" parent="CanvasLayer/MarginContainer/ObjectSpawn/VBoxContainer/StatusBar"]
+layout_mode = 2
+text = "Spawn Object"
+
+[connection signal="pressed" from="CanvasLayer/MarginContainer/ObjectSpawn/VBoxContainer/StatusBar/SpawnObject" to="CanvasLayer/MarginContainer/ObjectSpawn" method="_on_spawn_object_pressed"]
