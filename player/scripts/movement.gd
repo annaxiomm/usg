@@ -35,6 +35,11 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor() and not fly:
 		velocity += get_gravity() * gravity_modifier * delta 
+		
+	if is_on_floor():
+		var floor = floor
+		if floor is RigidBody3D:
+			velocity += floor.linear_velocity
 
 	if move:
 		# Handle jump.

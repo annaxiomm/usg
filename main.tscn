@@ -36,9 +36,6 @@ shape = SubResource("BoxShape3D_0xm2m")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="floor"]
 mesh = SubResource("BoxMesh_1bvp3")
 
-[node name="Player" parent="." instance=ExtResource("2_0xm2m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.939082, 0)
-
 [node name="env" type="Node3D" parent="."]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="env"]
@@ -46,6 +43,8 @@ transform = Transform3D(1, 0, 0, 0, 0.74616176, 0.66576475, 0, -0.66576475, 0.74
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="env"]
 environment = SubResource("Environment_7mycd")
+
+[node name="Player" parent="." instance=ExtResource("2_0xm2m")]
 
 [node name="GameStateManager" type="Node3D" parent="."]
 process_mode = 3
