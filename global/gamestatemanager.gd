@@ -15,16 +15,16 @@ func set_state(new_state: GameState) -> void:
 
 	match state:
 		GameState.PLAYING:
-			get_tree().paused = false
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			get_parent().get_node("Player").unpause_movement()
 
 		GameState.SPAWN_MENU:
-			get_tree().paused = false
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			get_parent().get_node("Player").pause_movement()
 
 		GameState.PAUSED:
-			get_tree().paused = true
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			get_parent().get_node("Player").pause_movement()
 
 
 func _unhandled_input(event):

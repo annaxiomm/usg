@@ -14,7 +14,7 @@ extends CharacterBody3D
 
 @export var fly: bool = false
 
-var move = true
+@export var move = true
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -85,6 +85,8 @@ func _physics_process(delta: float) -> void:
 	
 func pause_movement():
 	move = false
+	Input.flush_buffered_events()
+	velocity = Vector3.ZERO
 	
 func unpause_movement():
 	move = true

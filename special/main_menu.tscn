@@ -124,7 +124,7 @@ layout_mode = 2
 
 [node name="GameName" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "unnamed sandbox game"
+text = "untitled sandbox game"
 label_settings = SubResource("LabelSettings_at6ll")
 
 [node name="MenuOptions" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]

@@ -42,21 +42,26 @@ func close() -> void:
 
 
 func reload_objects() -> void:
-	object_spawner.scan_user_folder()
+	object_spawner.scan_object_folders()
 	objects = object_spawner.available_objects
+
 	for i in object_list.get_children():
 		i.queue_free()
-	for i in objects:
+
+	for obj_dict in objects:
 		var label = Button.new()
-		label.text = i
-		if i == object_spawner.loaded_object_name:
+		label.text = obj_dict["name"]
+		if obj_dict["name"] == object_spawner.loaded_object_name:
 			label.flat = true
-		label.connect("pressed", Callable(self, "object_selected").bind(i))
+		# Pass the source as well so you know if it's user or builtin
+		label.connect("pressed", Callable(self, "object_selected").bind(obj_dict))
 		object_list.add_child(label)
-		
-func object_selected(name: String):
-	$VBoxContainer/StatusBar/ObjectName.text = name
-	object_spawner.load_new_object(name)
+
+
+func object_selected(obj_dict: Dictionary):
+	$VBoxContainer/StatusBar/ObjectName.text = obj_dict["name"]
+	object_spawner.load_new_object(obj_dict["name"])
+
 
 
 func _on_spawn_object_pressed() -> void:
